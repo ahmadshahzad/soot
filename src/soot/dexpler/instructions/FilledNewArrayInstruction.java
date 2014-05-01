@@ -42,6 +42,7 @@ import soot.jimple.AssignStmt;
 import soot.jimple.IntConstant;
 import soot.jimple.Jimple;
 import soot.jimple.NewArrayExpr;
+import soot.options.Options;
 
 public class FilledNewArrayInstruction extends FilledArrayInstruction {
 
@@ -70,7 +71,9 @@ public class FilledNewArrayInstruction extends FilledArrayInstruction {
         Type t = DexType.toSoot((TypeReference) filledNewArrayInstr.getReference());
         // NewArrayExpr needs the ElementType as it increases the array dimension by 1
         Type arrayType = ((ArrayType) t).getElementType();
-System.out.println("array element type: (filled narr)"+ arrayType);
+        if (!Options.v().mute_some_output()) {
+            System.out.println("array element type: (filled narr)" + arrayType);
+        }
         NewArrayExpr arrayExpr = Jimple.v().newNewArrayExpr(arrayType, IntConstant.v(usedRegister));
         // new local generated intentional, will be moved to real register by MoveResult
         arrayLocal = body.getStoreResultLocal();
