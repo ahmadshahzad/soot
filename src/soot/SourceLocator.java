@@ -168,7 +168,12 @@ public class SourceLocator
             if (path.endsWith(".zip") || path.endsWith(".jar") || path.endsWith(".apk")) {
                 return true;
             } else {
-            G.v().out.println("Warning: the following soot-classpath entry is not a supported archive file (must be .zip, .jar or .apk): " + path);
+                /**  if(!path.endsWith(".dex")) added by shahzad as it also supports the dex file but just show the warning.
+                 *  So to ignore warning from the console i added this check here.
+                 */
+                if(!path.endsWith(".dex")) {
+                    G.v().out.println("Warning: the following soot-classpath entry is not a supported archive file (must be .zip, .jar or .apk): " + path);
+                }
             }
         }
         return false;
